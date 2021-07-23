@@ -4,7 +4,14 @@ function SignUp(props) {
   const { onSignUp } = props;
 
   return (
-    <form onSubmit={onSignUp}>
+    <form
+      onSubmit={onSignUp}
+      method="POST"
+      action="/upload"
+      encType="multipart/form-data"
+    >
+      <input type="file" name="myImage" accept="image/png, image/jpg" />
+
       <div className="form-group">
         <label htmlFor="InputUsername">Username</label>
         <input
@@ -27,6 +34,8 @@ function SignUp(props) {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
+
+      {props.error ? <p>{props.error}</p> : ""}
     </form>
   );
 }
