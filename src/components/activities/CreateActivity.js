@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import moment from "moment";
 import { Button, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CreateActivity(props) {
-  const [date, updateDate] = useState("");
-  console.log(props);
-  console.log(date);
-
   const classes = useStyles();
   const { onCreateActivity } = props;
 
@@ -44,7 +40,7 @@ function CreateActivity(props) {
         id="date"
         label="Date"
         type="date"
-        defaultValue="2021-05-24"
+        defaultValue={moment().format("yyyy-MM-DD")}
         name="date"
         className={classes.textField}
         InputLabelProps={{

@@ -6,11 +6,14 @@ import { API_URL } from "./config";
 import axios from "axios";
 import HomePage from "./pages/HomePage";
 import MyNav from "./components/MyNav";
+import NotFound from "./components/NotFound";
 import ActivitiesList from "./components/activities/ActivitiesList";
 import CreateActivity from "./components/activities/CreateActivity";
+import EditActivity from "./components/activities/EditActivity";
 
 class App extends Component {
   state = {
+    activities: [],
     user: null,
     fetchingUser: true,
     myError: null,
@@ -18,6 +21,14 @@ class App extends Component {
 
   async componentDidMount() {
     try {
+      let activityResponse = await axios.get(`${API_URL}/api/activities`, {
+        withCredentials: true,
+      });
+
+      this.setState({
+        activities: activityResponse.data,
+      });
+
       let userResponse = await axios.get(`${API_URL}/api/user`, {
         withCredentials: true,
       });
@@ -130,6 +141,37 @@ class App extends Component {
     }
   };
 
+  handleEditActivity = (event, activity) => {
+    event.preventDefault();
+    console.log(activity);
+
+    axios
+      .patch(`${API_URL}/api/activity/${activity._id}/edit`, activity, {
+        withCredentials: true,
+      })
+      .then(() => {
+        let updatedactivities = this.state.activities.map((activ) => {
+          if (activ._id === activity._id) {
+            activ.name = activity.name;
+            activ.description = activity.description;
+          }
+          return activ;
+        });
+
+        this.setState(
+          {
+            activities: updatedactivities,
+          },
+          () => {
+            this.props.history.push("/");
+          }
+        );
+      })
+      .catch(() => {
+        console.log("Edit failed");
+      });
+  };
+
   render() {
     return (
       <div>
@@ -172,7 +214,11 @@ class App extends Component {
             path="/activity"
             render={(routeProps) => {
               return (
-                <ActivitiesList error={this.state.myError} {...routeProps} />
+                <ActivitiesList
+                  activities={this.state.activities}
+                  error={this.state.myError}
+                  {...routeProps}
+                />
               );
             }}
           />
@@ -188,6 +234,21 @@ class App extends Component {
               );
             }}
           />
+
+          <Route
+            path={`/activity/:id/edit`}
+            render={(routeProps) => {
+              return (
+                <EditActivity
+                  activities={this.state.activities}
+                  onEdit={this.handleEditActivity}
+                  error={this.state.myError}
+                  {...routeProps}
+                />
+              );
+            }}
+          />
+          <Route component={NotFound} />
         </Switch>
       </div>
     );
