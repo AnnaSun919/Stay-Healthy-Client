@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import { Button, TextField } from "@material-ui/core";
@@ -28,11 +28,11 @@ function CreateActivity(props) {
   return (
     <form
       onSubmit={onCreateActivity}
-      method="POST"
-      action="/upload"
-      encType="multipart/form-data"
-      className={classes.container}
-      noValidate
+      // method="POST"
+      // action="/upload"
+      // // encType="multipart/form-data"
+      // className={classes.container}
+      // noValidate
     >
       <input type="file" name="myImage" accept="image/png, image/jpg" />
       <input name="name" type="text" placeholder="Enter name" />

@@ -9,7 +9,7 @@ function ActivitiesList(props) {
       <br />
       {activities.map((activity) => (
         <>
-          <Link to={`/activity/${activity._id}/edit`}>
+          <Link to={`/activity/${activity._id}`}>
             <img src={activity.image} alt="activitypic" />
             <br />
           </Link>
