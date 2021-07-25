@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 function ActivitiesList(props) {
   const { activities } = props;
+
+  console.log(activities);
   return (
     <div>
       <Link to="/activity/create">Create Activity</Link>

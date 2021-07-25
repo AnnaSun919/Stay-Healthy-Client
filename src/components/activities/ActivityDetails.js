@@ -33,7 +33,7 @@ function ActivityDetails(props) {
       console.log("Activity fetch failed", err);
     }
   }, []);
-  console.log(activityDetail);
+
   if (!activityDetail) {
     return <p>Loading</p>;
   }
@@ -42,7 +42,7 @@ function ActivityDetails(props) {
     <div>
       <h4>Name: {activityDetail.name}</h4>
       <h4>
-        Host:{activityDetail.creater.username}{" "}
+        Host:{activityDetail.creater.username}
         <img src={activityDetail.creater.image} />
       </h4>
 
@@ -60,6 +60,7 @@ function ActivityDetails(props) {
       </button>
 
       <Comment
+        activityDetail={activityDetail}
         onCreateComment={(event) => onCreateComment(event, activityDetail)}
       />
     </div>

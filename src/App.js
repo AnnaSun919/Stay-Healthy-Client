@@ -115,7 +115,8 @@ class App extends Component {
   handleCreateActivity = async (event) => {
     event.preventDefault();
     console.log("HI");
-    const { date, time, name, description, location, category } = event.target;
+    const { date, time, name, description, location, category, comments } =
+      event.target;
     console.log(this.state.user._id);
 
     let formData = new FormData();
@@ -131,6 +132,7 @@ class App extends Component {
       category: category.value,
       description: description.value,
       image: imgResponse.data.image,
+      comments: comments,
       creater: this.state.user._id,
     };
 
