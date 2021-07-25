@@ -1,9 +1,35 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  TextareaAutosize,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 700,
+    margin: 50,
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
   container: {
     display: "flex",
     flexWrap: "wrap",
@@ -17,67 +43,113 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 400,
-    height: 500,
+    height: 100,
   },
 }));
 
 function CreateActivity(props) {
   const classes = useStyles();
+
   const { onCreateActivity } = props;
 
   return (
-    <form
-      onSubmit={onCreateActivity}
-      // method="POST"
-      // action="/upload"
-      // // encType="multipart/form-data"
-      // className={classes.container}
-      // noValidate
-    >
-      <input type="file" name="myImage" accept="image/png, image/jpg" />
-      <input name="name" type="text" placeholder="Enter name" />
-      <TextField
-        id="date"
-        label="Date"
-        type="date"
-        defaultValue={moment().format("yyyy-MM-DD")}
-        name="date"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+    <Grid container justify="center">
+      <Card className={classes.root}>
+        <CardHeader
+          // avatar={
+          //   <Avatar aria-label="recipe" className={classes.avatar}>
+          //     {}
+          //   </Avatar>
+          // }
+          title="Create Activity"
+        />
+        <CardContent>
+          <form
+            onSubmit={onCreateActivity}
+            // method="POST"
+            // action="/upload"
+            // // encType="multipart/form-data"
+            // className={classes.container}
+            // noValidate
+          >
+            <TextField
+              type="file"
+              name="myImage"
+              accept="image/png, image/jpg"
+            />
+            <br />
+            <TextField name="name" type="text" placeholder="Enter title" />
+            <br />
+            <TextField
+              id="date"
+              label="Date"
+              type="date"
+              defaultValue={moment().format("yyyy-MM-DD")}
+              name="date"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <br />
 
-      <TextField
-        id="time"
-        label="Time"
-        type="time"
-        defaultValue="07:30"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-      />
-      <input name="location" type="text" placeholder="Location" />
-      <input name="category" type="text" placeholder="category" />
+            <TextField
+              variant="outlined"
+              id="time"
+              label="Time"
+              type="time"
+              defaultValue="07:30"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                step: 300, // 5 min
+              }}
+            />
+            <br />
+            <TextField
+              variant="outlined"
+              name="location"
+              type="text"
+              placeholder="Location"
+            />
+            <br />
+            <TextField
+              variant="outlined"
+              name="category"
+              type="text"
+              placeholder="Category"
+            />
+            <br />
+            <TextareaAutosize
+              maxRows={4}
+              // aria-label="maximum height"
+              placeholder="Description"
+              // defaultValue="Description"
+              name="description"
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+              style={{ width: 300, height: 300 }}
+            />
+            {/* <TextField
+              name="description"
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+              style={{ width: 500, height: 500 }}
+            /> */}
+            <br />
+            <Button type="submit" variant="contained" color="secondary">
+              Sumbit
+            </Button>
 
-      <TextField
-        className={classes.textField2}
-        name="description"
-        id="outlined-basic"
-        label="Description"
-        variant="outlined"
-      />
-
-      <Button type="submit" variant="contained" color="secondary">
-        Secondary
-      </Button>
-
-      {/* {props.error ? <p>{props.error}</p> : ""} */}
-    </form>
+            {/* {props.error ? <p>{props.error}</p> : ""} */}
+          </form>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 }
 

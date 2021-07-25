@@ -11,6 +11,9 @@ import ActivitiesList from "./components/activities/ActivitiesList";
 import CreateActivity from "./components/activities/CreateActivity";
 import EditActivity from "./components/activities/EditActivity";
 import ActivityDetails from "./components/activities/ActivityDetails";
+import Profile from "./components/user/Profile";
+
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -117,7 +120,6 @@ class App extends Component {
     console.log("HI");
     const { date, time, name, description, location, category, comments } =
       event.target;
-    console.log(this.state.user._id);
 
     let formData = new FormData();
     formData.append("imageUrl", event.target.myImage.files[0]);
@@ -153,7 +155,7 @@ class App extends Component {
 
           // redirects the app to a certain url
           // we're using the history push method to redirect it to any url we want
-          this.props.history.push("/");
+          this.props.history.push("/activity");
         }
       );
     } catch (err) {
@@ -237,19 +239,30 @@ class App extends Component {
           withCredentials: true,
         }
       );
+      this.setState({
+        comments: [response.data, ...this.state.comments],
+      });
+    } catch (err) {
+      // console.log(err.response);
+      // this.setState({
+      //   myError: err.response.data.error,
+      // });
+    }
+  };
+
+  handleLogOut = async () => {
+    try {
+      await axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true });
       this.setState(
         {
-          comments: [response.data, ...this.state.comments],
+          user: null,
         },
         () => {
           this.props.history.push("/");
         }
       );
     } catch (err) {
-      // console.log(err.response);
-      // this.setState({
-      //   myError: err.response.data.error,
-      // });
+      console.log("Logout failed", err);
     }
   };
 
@@ -261,7 +274,7 @@ class App extends Component {
     }
     return (
       <div>
-        <MyNav />
+        <MyNav user={this.state.user} onHandleLogOut={this.handleLogOut} />
 
         <Switch>
           <Route
@@ -348,6 +361,13 @@ class App extends Component {
                   {...routeProps}
                 />
               );
+            }}
+          />
+          <Route
+            exact
+            path={`/profile`}
+            render={(routeProps) => {
+              return <Profile error={this.state.myError} {...routeProps} />;
             }}
           />
 

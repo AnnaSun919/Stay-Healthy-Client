@@ -3,7 +3,7 @@ import "../App.css";
 function HomePage() {
   return (
     <div>
-      <h1>Be active, Stay Healthy</h1>
+      <h1 className="title">Be active, Stay Healthy</h1>
     </div>
   );
 }

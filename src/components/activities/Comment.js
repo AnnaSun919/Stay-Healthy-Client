@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CreateComment from "./CreateComment";
+import { Avatar } from "@material-ui/core";
 
 function Comment(props) {
   console.log(props);
@@ -27,7 +28,7 @@ function Comment(props) {
       {comments.map((elem) => (
         <>
           <p>
-            {elem.comment} by {elem.creater.username}
+            <Avatar src={elem.creater.image} alt="User" /> : {elem.comment}
           </p>
         </>
       ))}

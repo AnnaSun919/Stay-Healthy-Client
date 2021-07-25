@@ -3,8 +3,27 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Comment from "./Comment";
+import { makeStyles } from "@material-ui/core/styles";
+import { Avatar } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+    overflowX: "auto",
+  },
+  table: {
+    minWidth: 650,
+  },
+  image: {
+    height: "25%",
+    width: "25%",
+  },
+}));
 
 function ActivityDetails(props) {
+  const classes = useStyles();
+
   const [activityDetail, updateActiviy] = useState(null);
 
   const { onCreateComment } = props;
@@ -42,8 +61,9 @@ function ActivityDetails(props) {
     <div>
       <h4>Name: {activityDetail.name}</h4>
       <h4>
-        Host:{activityDetail.creater.username}
-        <img src={activityDetail.creater.image} />
+        Host:
+        <Avatar src={activityDetail.creater.image} alt="User" />
+        <img className={classes.image} src={activityDetail.image} />
       </h4>
 
       <h6>Description: {activityDetail.description}</h6>
