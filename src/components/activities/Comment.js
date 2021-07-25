@@ -8,23 +8,23 @@ function Comment(props) {
 
   const { onCreateComment } = props;
 
-  // useEffect(() => {
-  //   try {
-  //     async function getData() {
-  //       let response = await axios.get(`${API_URL}/api/comments/`);
-  //       updateComment(response.data);
-  //       console.log(response.data);
-  //     }
+  useEffect(() => {
+    try {
+      async function getData() {
+        let response = await axios.get(`${API_URL}/api/comments/`);
+        updateComment(response.data);
+        console.log(response.data);
+      }
 
-  //     getData();
-  //   } catch (err) {
-  //     console.log("comment fetch failed", err);
-  //   }
-  // }, []);
+      getData();
+    } catch (err) {
+      console.log("comment fetch failed", err);
+    }
+  }, []);
 
-  // if (!comment) {
-  //   return <p>Loading</p>;
-  // }
+  if (!comment) {
+    return <p>Loading</p>;
+  }
 
   return (
     <div>
