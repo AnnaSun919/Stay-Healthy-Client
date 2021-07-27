@@ -12,8 +12,8 @@ import CreateActivity from "./components/activities/CreateActivity";
 import EditActivity from "./components/activities/EditActivity";
 import ActivityDetails from "./components/activities/ActivityDetails";
 import Profile from "./components/user/Profile";
-
 import "./App.css";
+import Test from "./pages/Test";
 
 class App extends Component {
   state = {
@@ -26,6 +26,14 @@ class App extends Component {
 
   async componentDidMount() {
     try {
+      let commentResponse = await axios.get(`${API_URL}/api/comments`, {
+        withCredentials: true,
+      });
+
+      this.setState({
+        comments: commentResponse.data,
+        fetchingActivity: false,
+      });
       let activityResponse = await axios.get(`${API_URL}/api/activities`, {
         withCredentials: true,
       });
@@ -49,8 +57,6 @@ class App extends Component {
         fetchingActivity: false,
       });
     }
-    console.log(this.state.fetchingActivity);
-    console.log("component did mount");
   }
 
   handleSignUp = async (event) => {
@@ -177,6 +183,7 @@ class App extends Component {
         let updatedactivities = this.state.activities.map((activ) => {
           if (activ._id === activity._id) {
             activ.name = activity.name;
+            activ.location = activity.location;
             activ.time = activity.time;
             activ.date = activity.date;
             activ.description = activity.description;
@@ -222,12 +229,11 @@ class App extends Component {
     event.preventDefault();
 
     const { comment } = event.target;
-    console.log(this.state.user._id);
-    console.log(activity._id);
 
     let usercomment = {
       comment: comment.value,
       creater: this.state.user._id,
+      createrimg: this.state.user.image,
       activity: activity._id,
     };
 
@@ -240,13 +246,33 @@ class App extends Component {
         }
       );
       this.setState({
-        comments: [response.data, ...this.state.comments],
+        comments: [...this.state.comments, usercomment],
       });
+      console.log(JSON.stringify(usercomment));
+
+      console.log(`hello ${response.data}`);
     } catch (err) {
       // console.log(err.response);
       // this.setState({
       //   myError: err.response.data.error,
       // });
+    }
+  };
+
+  handleJoin = async (event, id) => {
+    event.preventDefault();
+
+    let join = {
+      join: this.state.user._id,
+    };
+
+    try {
+      await axios.post(`${API_URL}/api/activity/${id}/join`, join, {
+        withCredentials: true,
+      });
+      this.props.history.push("/");
+    } catch (err) {
+      console.log("Join failed", err);
     }
   };
 
@@ -267,6 +293,7 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.state.user);
     console.log("App props", this.props);
 
     if (this.state.fetchingActivity && this.state.fetchingUser) {
@@ -294,7 +321,9 @@ class App extends Component {
             exact
             path="/"
             render={(routeProps) => {
-              return <HomePage {...routeProps} />;
+              return (
+                <HomePage {...routeProps} activities={this.state.activities} />
+              );
             }}
           />
           <Route
@@ -354,10 +383,12 @@ class App extends Component {
             render={(routeProps) => {
               return (
                 <ActivityDetails
+                  onHandleJoin={this.handleJoin}
                   activities={this.state.activities}
                   onDelete={this.handleDeleteActivity}
                   onCreateComment={this.handleCreateComment}
                   error={this.state.myError}
+                  comments={this.state.comments}
                   {...routeProps}
                 />
               );
@@ -368,6 +399,13 @@ class App extends Component {
             path={`/profile`}
             render={(routeProps) => {
               return <Profile error={this.state.myError} {...routeProps} />;
+            }}
+          />
+          <Route
+            exact
+            path={`/test`}
+            render={(routeProps) => {
+              return <Test error={this.state.myError} {...routeProps} />;
             }}
           />
 

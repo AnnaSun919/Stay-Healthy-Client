@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MyNav(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -99,6 +100,9 @@ export default function MyNav(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
+            <MenuItem component={Link} to={"/"} onClick={handleClose}>
+              Home
+            </MenuItem>
             <MenuItem component={Link} to={"/profile"} onClick={handleClose}>
               Profile
             </MenuItem>
@@ -116,6 +120,7 @@ export default function MyNav(props) {
           <Typography className={classes.title} variant="h6" noWrap>
             Be Active , Stay Healthy
           </Typography>
+
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

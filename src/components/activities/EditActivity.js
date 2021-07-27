@@ -1,4 +1,11 @@
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+} from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { API_URL } from "../../config";
 import axios from "axios";
@@ -7,6 +14,26 @@ import moment from "moment";
 
 function EditActivity(props) {
   const useStyles = makeStyles((theme) => ({
+    root: {
+      width: "auto",
+      margin: 50,
+      display: "flex",
+      flexDirection: "column",
+    },
+    media: {
+      height: 0,
+      paddingTop: "56.25%", // 16:9
+    },
+    expand: {
+      transform: "rotate(0deg)",
+      marginLeft: "auto",
+      transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: "rotate(180deg)",
+    },
     container: {
       display: "flex",
       flexWrap: "wrap",
@@ -14,15 +41,17 @@ function EditActivity(props) {
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(3),
       width: 200,
     },
     textField2: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       width: 400,
-      height: 500,
+      height: 100,
     },
   }));
+
   const { onEdit } = props;
   const [activitydetails, updateactivity] = useState(null);
   const classes = useStyles();
@@ -86,89 +115,125 @@ function EditActivity(props) {
   };
   return (
     <div>
-      EDIT
       {activitydetails ? (
-        <form
-          onSubmit={(event) => {
-            onEdit(event, activitydetails);
-          }}
+        <Grid container justify="center">
+          <Card className={classes.root}>
+            <CardHeader title="Edit Activity" />
+            <form
+              onSubmit={(event) => {
+                onEdit(event, activitydetails);
+              }}
 
-          // method="POST"
-          // action="/upload"
-          // encType="multipart/form-data"
-          // className={classes.container}
-          // noValidate
-        >
-          {/* <input type="file" name="myImage" accept="image/png, image/jpg" /> */}
-          <input
-            onChange={handleNameChange}
-            name="name"
-            type="text"
-            placeholder={activitydetails.name}
-          />
-
-          <TextField
-            onChange={handleDateChange}
-            id="date"
-            label="Date"
-            type="date"
-            defaultValue={moment.utc(activitydetails.date).format("YYYY-MM-DD")}
-            name="date"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          <TextField
-            onChange={handleTimeChange}
-            id="time"
-            label="Time"
-            type="time"
-            defaultValue={activitydetails.time}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              step: 600, // 1 min
-            }}
-          />
-          <input
-            onChange={handleLocaChange}
-            name="location"
-            type="text"
-            placeholder={activitydetails.location}
-          />
-          <input
-            onChange={handleCatChange}
-            name="category"
-            type="text"
-            placeholder={activitydetails.category}
-          />
-          {/* <input
+              // method="POST"
+              // action="/upload"
+              // encType="multipart/form-data"
+              // className={classes.container}
+              // noValidate
+            >
+              {/* <input type="file" name="myImage" accept="image/png, image/jpg" /> */}
+              <CardContent>
+                <TextField
+                  label="Edit Title"
+                  className={classes.textField}
+                  onChange={handleNameChange}
+                  name="name"
+                  type="text"
+                  placeholder={activitydetails.name}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                <TextField
+                  className={classes.textField}
+                  onChange={handleDateChange}
+                  id="date"
+                  label="Edit Date"
+                  type="date"
+                  defaultValue={moment
+                    .utc(activitydetails.date)
+                    .format("YYYY-MM-DD")}
+                  name="date"
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                <TextField
+                  className={classes.textField}
+                  onChange={handleTimeChange}
+                  id="time"
+                  label="Time"
+                  type="time"
+                  defaultValue={activitydetails.time}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    step: 600, // 1 min
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                <TextField
+                  className={classes.textField}
+                  onChange={handleLocaChange}
+                  label="Edit Location"
+                  name="location"
+                  type="text"
+                  placeholder={activitydetails.location}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                <TextField
+                  label="Change Category"
+                  className={classes.textField}
+                  onChange={handleCatChange}
+                  name="category"
+                  type="text"
+                  placeholder={activitydetails.category}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                {/* <input
           
             name="description"
             type="text"
             placeholder={activitydetails.description}
           /> */}
+                <TextField
+                  onChange={handleDesChange}
+                  className={classes.textField2}
+                  name="description"
+                  id="outlined-basic"
+                  label="Description"
+                  variant="outlined"
+                  placeholder={activitydetails.description}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                <Button type="submit" variant="contained" color="secondary">
+                  Submit
+                </Button>
+              </CardContent>
 
-          <TextField
-            onChange={handleDesChange}
-            className={classes.textField2}
-            name="description"
-            id="outlined-basic"
-            label="Description"
-            variant="outlined"
-            placeholder={activitydetails.description}
-          />
-
-          <Button type="submit" variant="contained" color="secondary">
-            Submit
-          </Button>
-
-          {/* {props.error ? <p>{props.error}</p> : ""} */}
-        </form>
+              {/* {props.error ? <p>{props.error}</p> : ""} */}
+            </form>
+          </Card>
+        </Grid>
       ) : (
         <p>loading......</p>
       )}

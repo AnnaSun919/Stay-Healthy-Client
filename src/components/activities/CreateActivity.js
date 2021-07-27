@@ -13,7 +13,8 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 700,
+    // maxWidth: 700,
+    width: "auto",
     margin: 50,
   },
   media: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(3),
     width: 200,
   },
   textField2: {
@@ -73,12 +75,18 @@ function CreateActivity(props) {
             // noValidate
           >
             <TextField
+              className={classes.textField}
               type="file"
               name="myImage"
               accept="image/png, image/jpg"
             />
             <br />
-            <TextField name="name" type="text" placeholder="Enter title" />
+            <TextField
+              className={classes.textField}
+              name="name"
+              type="text"
+              placeholder="Enter title"
+            />
             <br />
             <TextField
               id="date"
@@ -109,6 +117,7 @@ function CreateActivity(props) {
             />
             <br />
             <TextField
+              className={classes.textField}
               variant="outlined"
               name="location"
               type="text"
@@ -116,6 +125,7 @@ function CreateActivity(props) {
             />
             <br />
             <TextField
+              className={classes.textField}
               variant="outlined"
               name="category"
               type="text"
@@ -123,6 +133,7 @@ function CreateActivity(props) {
             />
             <br />
             <TextareaAutosize
+              className={classes.textField}
               maxRows={4}
               // aria-label="maximum height"
               placeholder="Description"
@@ -131,7 +142,7 @@ function CreateActivity(props) {
               id="outlined-basic"
               label="Description"
               variant="outlined"
-              style={{ width: 300, height: 300 }}
+              style={{ minWidth: 300, height: 300 }}
             />
             {/* <TextField
               name="description"

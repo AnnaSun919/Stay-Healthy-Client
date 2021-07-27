@@ -7,19 +7,21 @@ import moment from "moment";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    height: "auto",
-    width: "auto",
-    maxWidth: "70%",
+
+    minWidth: 300,
     margin: 50,
     justify: "center",
   },
   content: {
     display: "flex",
-
+    flexDirection: "column",
     flex: "1 0 auto",
+    margin: 5,
+    padding: 0,
   },
   img: {
-    width: "15%",
+    width: 300,
+    height: 300,
   },
 }));
 
@@ -42,6 +44,22 @@ function ActivitiesList(props) {
               to={`/activity/${activity._id}`}
               className={classes.root}
             >
+              <CardContent className={classes.content}>
+                <img
+                  className={classes.img}
+                  src={activity.image}
+                  alt="activitypic"
+                />
+              </CardContent>
+              <CardContent className={classes.content}>
+                <Typography component="h5" variant="h5">
+                  {activity.name}
+                </Typography>
+                <Typography component="h5" variant="h5"></Typography>
+                Location : {activity.location}
+                <br />
+                Time : {activity.time}
+              </CardContent>
               <CardContent
                 style={{
                   background: "#951F3A",
@@ -55,21 +73,6 @@ function ActivitiesList(props) {
                   <br />
                   {moment(activity.date).format("yyyy ")}
                 </Typography>
-              </CardContent>
-              <CardContent className={classes.content}>
-                <Typography component="h5" variant="h5">
-                  Activity: {activity.name}
-                </Typography>
-                Location : {activity.location}
-                <br />
-                Description: {activity.description}
-              </CardContent>
-              <CardContent className={classes.content}>
-                <img
-                  className={classes.img}
-                  src={activity.image}
-                  alt="activitypic"
-                />
               </CardContent>
             </Card>
           </Grid>
