@@ -58,9 +58,12 @@ function ActivitiesList(props) {
                 <Typography component="h5" variant="h5"></Typography>
                 Location : {activity.location}
                 <br />
+                {moment(activity.date).format("MMM-DD-yyyy")}
                 Time : {activity.time}
+                <br />
+                Attendees : {activity.joins.length}
               </CardContent>
-              <CardContent
+              {/* <CardContent
                 style={{
                   background: "#951F3A",
                   color: "White",
@@ -73,7 +76,7 @@ function ActivitiesList(props) {
                   <br />
                   {moment(activity.date).format("yyyy ")}
                 </Typography>
-              </CardContent>
+              </CardContent> */}
             </Card>
           </Grid>
         </>

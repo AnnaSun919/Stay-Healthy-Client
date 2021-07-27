@@ -46,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  btn: {
+    margin: theme.spacing(1),
+    height: 20,
+    width: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    margain: 0,
+    justifyContent: "flex-end",
+  },
 }));
 
 function ActivityDetails(props) {
@@ -54,17 +65,8 @@ function ActivityDetails(props) {
   const [activityDetail, updateActiviy] = useState(null);
 
   const { onCreateComment, comments } = props;
-
-  // useEffect(async () => {
-  //   try {
-
-  //     let id = props.match.params.id;
-  //     let response = await axios.get(`${API_URL}/api/activity/${id}`);
-  //     updateActiviy(response.data);
-  //   } catch (err) {
-  //     console.log("Activity fetch failed", err);
-  //   }
-  // }, []);
+  const [creater, updatecreater] = useState(false);
+  const [isJoin, updatejoin] = useState(false);
 
   useEffect(() => {
     try {
@@ -80,18 +82,77 @@ function ActivityDetails(props) {
     }
   }, []);
 
+  useEffect(() => {
+    if (props.user && activityDetail) {
+      if (props.user._id === activityDetail.creater._id) {
+        updatecreater(true);
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (props.user && activityDetail) {
+      for (let i = 0; i < activityDetail.joins.length; i++)
+        if (activityDetail.joins[i]._id === props.user._id) {
+          console.log("yes");
+          updatejoin(true);
+        }
+    }
+  });
+
+  console.log(isJoin);
+
   if (!activityDetail) {
     return <p>Loading</p>;
   }
-  console.log(activityDetail.joins);
 
   return (
     <div>
       <Grid container justify="center">
         <Card className={classes.root}>
-          <CardContent className={classes.content}>
+          <CardContent className={classes.button}>
             <h1> {activityDetail.name}</h1>
+            {creater ? (
+              <p>
+                <Button
+                  variant="outlined"
+                  className={classes.btn}
+                  component={Link}
+                  to={`/activity/${activityDetail._id}/edit`}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  className={classes.btn}
+                  onClick={() => {
+                    props.onDelete(activityDetail._id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </p>
+            ) : (
+              <p></p>
+            )}
+
+            {!isJoin && props.user ? (
+              <p>
+                <Button
+                  variant="outlined"
+                  className={classes.btn}
+                  onClick={(event) => {
+                    props.onHandleJoin(event, activityDetail._id);
+                  }}
+                >
+                  Join
+                </Button>
+              </p>
+            ) : (
+              <p></p>
+            )}
           </CardContent>
+
           {/* <div className={classes.root}> */}
           <Grid container spacing={1}>
             <img className={classes.image} src={activityDetail.image} />
@@ -108,32 +169,8 @@ function ActivityDetails(props) {
 
           <h6>Description: {activityDetail.description}</h6>
 
-          <CardContent className={classes.content}>
-            <Button
-              className={classes.btn}
-              component={Link}
-              to={`/activity/${activityDetail._id}/edit`}
-            >
-              Edit
-            </Button>
-            <Button
-              className={classes.btn}
-              onClick={() => {
-                props.onDelete(activityDetail._id);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              className={classes.btn}
-              onClick={(event) => {
-                props.onHandleJoin(event, activityDetail._id);
-              }}
-            >
-              Join
-            </Button>
-          </CardContent>
           <Comment
+            user={props.user}
             activityDetail={activityDetail}
             comments={comments}
             onCreateComment={(event) => onCreateComment(event, activityDetail)}

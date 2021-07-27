@@ -14,6 +14,7 @@ import ActivityDetails from "./components/activities/ActivityDetails";
 import Profile from "./components/user/Profile";
 import "./App.css";
 import Test from "./pages/Test";
+import { TurnedInSharp } from "@material-ui/icons";
 
 class App extends Component {
   state = {
@@ -22,6 +23,7 @@ class App extends Component {
     user: null,
     fetchingUser: true,
     myError: null,
+    login: false,
   };
 
   async componentDidMount() {
@@ -47,6 +49,7 @@ class App extends Component {
         withCredentials: true,
       });
       this.setState({
+        login: true,
         user: userResponse.data,
         fetchingUser: false,
       });
@@ -124,6 +127,7 @@ class App extends Component {
   handleCreateActivity = async (event) => {
     event.preventDefault();
     console.log("HI");
+
     const { date, time, name, description, location, category, comments } =
       event.target;
 
@@ -165,6 +169,7 @@ class App extends Component {
         }
       );
     } catch (err) {
+      this.props.history.push("/sigin");
       console.log(err.response);
       this.setState({
         myError: err.response.data.error,
@@ -310,6 +315,7 @@ class App extends Component {
             render={(routeProps) => {
               return (
                 <ActivitiesList
+                  lo
                   activities={this.state.activities}
                   error={this.state.myError}
                   {...routeProps}
@@ -356,6 +362,7 @@ class App extends Component {
             render={(routeProps) => {
               return (
                 <CreateActivity
+                  user={this.state.user}
                   error={this.state.myError}
                   onCreateActivity={this.handleCreateActivity}
                   {...routeProps}
@@ -383,6 +390,7 @@ class App extends Component {
             render={(routeProps) => {
               return (
                 <ActivityDetails
+                  user={this.state.user}
                   onHandleJoin={this.handleJoin}
                   activities={this.state.activities}
                   onDelete={this.handleDeleteActivity}
@@ -398,7 +406,14 @@ class App extends Component {
             exact
             path={`/profile`}
             render={(routeProps) => {
-              return <Profile error={this.state.myError} {...routeProps} />;
+              return (
+                <Profile
+                  activities={this.state.activities}
+                  user={this.state.user}
+                  error={this.state.myError}
+                  {...routeProps}
+                />
+              );
             }}
           />
           <Route

@@ -49,7 +49,7 @@ function Comment(props) {
           </p>
         </>
       ))}
-      <CreateComment onCreateComment={onCreateComment} />
+      <CreateComment user={props.user} onCreateComment={onCreateComment} />
     </div>
   );
 }

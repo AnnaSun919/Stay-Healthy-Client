@@ -10,6 +10,7 @@ import {
   Grid,
   TextareaAutosize,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,14 @@ function CreateActivity(props) {
   const classes = useStyles();
 
   const { onCreateActivity } = props;
+
+  if (!props.user) {
+    return (
+      <p>
+        Please login <Link to="/signin">login</Link>{" "}
+      </p>
+    );
+  }
 
   return (
     <Grid container justify="center">

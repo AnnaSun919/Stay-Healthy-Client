@@ -11,55 +11,72 @@ import { Avatar, Typography, Grid, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
+    display: "flex",
     overflow: "hidden",
-    padding: theme.spacing(0, 3),
-    justify: "center",
-    alignItems: "center",
-
+    //   // padding: theme.spacing(0, 3),
+    // justify: "center",
+    // alignItems: "center",
+    margin: 50,
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      flexDirection: "column",
+      width: "80%",
+      heigh: "50%",
     },
     [theme.breakpoints.up("md")]: {
-      width: 600,
+      flexDirection: "colum",
+      width: "80%",
+      heigh: "50%",
+      // backgroundColor: theme.palette.secondary.main,
     },
     [theme.breakpoints.up("lg")]: {
-      width: 800,
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      width: "90%",
+      flexWrap: "wrap",
+      height: "80%",
     },
   },
-
+  // container: {},
   paper: {
+    margin: 10,
     [theme.breakpoints.down("sm")]: {
-      minWidth: 200,
-      maxWidth: 250,
-      backgroundColor: theme.palette.primary.main,
+      width: "80%",
+      heigh: "50%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "70%",
+      width: "80%",
+      heigh: "50%",
     },
     [theme.breakpoints.up("lg")]: {
-      width: "60%",
-      backgroundColor: theme.palette.primary.main,
+      width: "25%",
+      heigh: "25%",
+      minheigh: 10000,
+      // backgroundColor: theme.palette.primary.main,
     },
-
     // width: "auto",
-
-    justify: "center",
-    margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
+    //   justify: "center",
+    // margin: `${theme.spacing(1)}px auto`,
+    // padding: theme.spacing(2),
   },
   image: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      heigh: "50%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "80%",
+      width: "50",
+      heigh: "50",
     },
     [theme.breakpoints.up("lg")]: {
-      width: 600,
-      heigh: 600,
+      width: "48%",
+      height: "38%",
+
+      // backgroundColor: theme.palette.primary.main,
     },
-    justify: "center",
+    box: {
+      margin: 10,
+    },
   },
 }));
 
@@ -72,16 +89,15 @@ function HomePage(props) {
     <div>
       <LottieControl width={600} height={600} animation={MeditatJSON} />
       <h1>Our Picks </h1>
-
-      {activities.map((elem) => (
-        <>
-          <div className={classes.container}>
+      <div className={classes.root}>
+        {activities.map((elem) => (
+          <>
             <Link
-              style={{ textDecoration: "none" }}
               to={`/activity/${elem._id}`}
-              className={classes.root}
+              style={{ textDecoration: "none" }}
+              className={classes.paper}
             >
-              <Paper className={classes.paper}>
+              <Paper>
                 <Grid item container justify="center" alignItems="center">
                   <img
                     className={classes.image}
@@ -89,27 +105,29 @@ function HomePage(props) {
                     alt="actpic"
                   />
                 </Grid>
+
                 <Grid
+                  container
                   justify="center"
                   alignItems="center"
-                  container
                   wrap="wrap"
                   spacing={2}
                 >
                   {/* <Grid item xs> */}
-                  <Typography justify="center" alignItems="center" noWrap>
-                    <h1>{elem.name}</h1>
-                    <p>
-                      {moment(elem.date).format("DD MMM(ddd)")} {elem.time}
-                    </p>
+                  {/* justify="center" alignItems="center" noWrap */}
+                  <Typography>
+                    <h3>{elem.name}</h3>
+                    {elem.location}
+                    <br />
+                    Date: {moment(elem.date).format("DD MMM(ddd)")} {elem.time}
                   </Typography>
                   {/* </Grid> */}
                 </Grid>
               </Paper>
             </Link>
-          </div>
-        </>
-      ))}
+          </>
+        ))}
+      </div>
     </div>
   );
 }
