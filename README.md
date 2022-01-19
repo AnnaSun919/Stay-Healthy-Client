@@ -1,71 +1,111 @@
-# Getting Started with Create React App
+## Be active , stay healthy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Stay Healthy is a Platform for users to create and join healthy activities.
 
-## Available Scripts
+## Deployment Link 
 
-In the project directory, you can run:
+https://be-active-stay-healthy.herokuapp.com/
 
-### `yarn start`
+## User Stories
+- 404: As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
+- Signup: As an anon I can sign up in the platform so that I can start joining activities
+- Login: As a user I can login to the platform so that I can see my the activities I will join
+- Logout: As a user I can logout from the platform so no one else can use it
+- Add activities As a user I can add an activity so that I can share it with the community
+- List activities As a user I want to see the activities so that I can choose one to join
+- Comment actvites as a user i can comment any activites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Backlog
+- User community
+- see other users profile chat with them
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Client Side 
+### Routes 
+- / - Homepage
+- /auth/signup - Signup form
+- /auth/login - Login form
+- /activities - activities list
+- /activites/create - create a activity
+- /activities/:id - activie detail
+- /profile/me - my details and activities I will join
 
-### `yarn test`
+### Pages
+- Home Page (public)
+- Sign in Page (anon only)
+- Log in Page (anon only)
+- Activities List Page (public )
+- Activities Create (user only)
+- Activities Detail Page (public only)
+- My Profile Page (user only)
+- 404 Page (public)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Services Side 
+### Auth Services
+- auth.login(user)
+- auth.signup(user)
+- auth.logout()
+- auth.profile()
+- auth.getUser() // synchronous
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Activities Services
+- activities.list()
+- activities.create(data)
+- activities.detail(id)
+- activities.join
+- activities.comment()
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## Models
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### User Model:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    username:
+    type: String,
+    unique: true,
+    require: true,
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    password:
+    type: String,
+    required : true,
+    
+    img:String
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Activities Model:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    user: ID
+    name: String,
+    require: true,
+    
+    date: String,
+    time: String,
+    Description : String,
+    
+    joined : Schema.Types.ObjectId, 
+    ref: "User",
+    
+    comment : Schema.Types.ObjectId, 
+    ref: "comment",
+    
+    
+### Comment model:
 
-### Code Splitting
+    UserID: Schema.Types.ObjectId,
+    ref: "User",
+    
+    ActivitiesID: Schema.Types.ObjectId, 
+    ref: "Activites",
+    
+    Comment: String,
+ 
+## Built with
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# Stay-Healthy-Client
+-   React.js 
+-   React Hooks 
+-   MaterialUI
+-   Axios
+-   Cloudinary 
+-   Mongodb
