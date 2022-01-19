@@ -19,6 +19,11 @@ https://be-active-stay-healthy.herokuapp.com/
 - User community
 - see other users profile chat with them
 
+## Goal 
+- learn to use React class and react hooks 
+- learn to build UI with Material UI 
+- learn to build components with React.js 
+
 ## Client Side 
 ### Routes 
 - / - Homepage
