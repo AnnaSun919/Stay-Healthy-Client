@@ -1,6 +1,9 @@
-## Be active , stay healthy
+# Be active , stay healthy
 
 Stay Healthy is a Platform for users to create and join healthy activities.
+
+Server-side repo:
+https://github.com/AnnaSun919/Stay-Healthy-Server
 
 ## Deployment Link 
 
