@@ -8,6 +8,9 @@ https://github.com/AnnaSun919/Stay-Healthy-Server
 ## Deployment Link 
 
 https://be-active-stay-healthy.herokuapp.com/
+Demo-User please use:
+Username: Mary
+Password: 123456Aa!
 
 ## User Stories
 - 404: As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
